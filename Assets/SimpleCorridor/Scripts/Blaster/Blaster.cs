@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Valve.VR;
@@ -13,7 +12,7 @@ public class Blaster : MonoBehaviour
     [Header("Settings")]
     public int m_Force = 10;
     public int m_MaxProjectileCount = 6;
-    public float m_ReloadTime = 1.5f;
+    public float m_ReloadTime = 1.0f;
 
     [Header("References")]
     public Transform m_Barrel = null;
@@ -68,6 +67,9 @@ public class Blaster : MonoBehaviour
         Projectile targetProjectile = m_ProjectilePool.m_Projectiles[m_FiredCount];
         targetProjectile.Launch(this);
 
+        // play fire sound
+        AudioManager.instance.Play("PistolFire");
+
         UpdateFiredCount(m_FiredCount + 1);
     }
 
@@ -77,6 +79,7 @@ public class Blaster : MonoBehaviour
             yield break;
 
         m_AmmoOutput.text = "Reloading...";
+        AudioManager.instance.Play("ReloadGun");
         m_IsReloading = true;
 
         m_ProjectilePool.SetAllProjectiles();
