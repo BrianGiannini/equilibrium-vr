@@ -20,7 +20,7 @@ public class Pause : MonoBehaviour
     public void pauseGame()
     {
         Debug.Log("entered");
-        Time.timeScale = 0.05f;
+        Time.timeScale = 0.1f;
     }
 
     public void unPauseGame()
@@ -31,7 +31,8 @@ public class Pause : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Destroy(other.gameObject);
-        pauseGame();
+        unPauseGame();
+        
     }
 
 
