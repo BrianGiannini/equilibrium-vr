@@ -2,7 +2,6 @@
 using UnityEditor;
 using System.Collections;
 
-[InitializeOnLoad]
 public class StartGame : MonoBehaviour
 {
     private void Awake()
