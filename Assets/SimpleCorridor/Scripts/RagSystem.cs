@@ -28,13 +28,13 @@ public class RagSystem : MonoBehaviour
     
     private void OnTriggerEnter(Collider collider)
     {
+        //Debug.Log("entering trigger " + collider.gameObject.name);
 
         if (ragdollParts.Contains(collider))
         {
             return;
         }
 
-        Debug.Log("entering trigger " + collider.gameObject.name);
 
         /*
         if (!collidingParts.Contains(collider))

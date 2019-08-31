@@ -2,44 +2,56 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using System;
 
 public class SpeedController : MonoBehaviour
 {
     float _fixedDeltaTime;
     float _timeScale;
+
     public SteamVR_Action_Boolean slowMod = null;
+    private SteamVR_Behaviour_Pose m_Pose = null;
+    private int slowFactorTime;
+
+    float audioClipPitch;
+    float saveAudioClipPitch;
 
 
-    // Start is called before the first frame update
     void Start()
     {
+        _fixedDeltaTime = Time.fixedDeltaTime;
+        _timeScale = Time.timeScale;
+        m_Pose = GetComponentInParent<SteamVR_Behaviour_Pose>();
 
+        audioClipPitch = GetComponent<ShootHandgun>().audioSource.pitch;
+        saveAudioClipPitch = audioClipPitch;
     }
 
-    // Update is called once per frame
     void Update()
-    {
-        
+    {    
+        // slowmo Test system
+        if (slowMod.GetStateDown(m_Pose.inputSource))
+        {
+            if (slowFactorTime == 8)
+            {
+                GetComponent<ShootHandgun>().audioSource.pitch = saveAudioClipPitch;
+                slowFactorTime = 0;
+            } else if (slowFactorTime == 0) {
+                slowFactorTime = 1;
+            } else
+            {
+                slowFactorTime *= 2;
+                GetComponent<ShootHandgun>().audioSource.pitch = (float) Math.Round(GetComponent<ShootHandgun>().audioSource.pitch * 0.7, 2);
+            }
 
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Time.fixedDeltaTime = _fixedDeltaTime;
-            Time.timeScale = _timeScale;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            Time.fixedDeltaTime = _fixedDeltaTime / 2;
-            Time.timeScale = _timeScale / 2;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            Time.fixedDeltaTime = _fixedDeltaTime / 5;
-            Time.timeScale = _timeScale / 5;
-        }
-        else if (Input.GetKeyDown(KeyCode.Alpha4))
-        {
-            Time.fixedDeltaTime = _fixedDeltaTime / 10;
-            Time.timeScale = _timeScale / 10;
+            // Time.fixedDeltaTime = _fixedDeltaTime / slowFactorTime;
+            if (slowFactorTime == 0)
+            {
+                Time.timeScale = 0;
+            } else
+            {
+                Time.timeScale = _timeScale / slowFactorTime;
+            }
         }
     }
 }

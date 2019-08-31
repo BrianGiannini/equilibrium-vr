@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
+using System;
 
 
 public class ShootHandgun : MonoBehaviour
@@ -29,16 +30,17 @@ public class ShootHandgun : MonoBehaviour
 
         if (fireAction.GetStateDown(m_Pose.inputSource))
         {
-            animator.SetBool("Fire", true);
-            Fire();
+            if (Time.timeScale != 0)
+            {
+                animator.SetBool("Fire", true);
+                Fire();
+            }
         }
-
-       
-
     }
 
     private void Fire()
     {
+        // audioSource.pitch = (float) Math.Round(audioSource.pitch * 0.8, 2);
         audioSource.PlayOneShot(audioClip, 0.5F);            
      }
 }
