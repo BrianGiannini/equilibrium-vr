@@ -17,11 +17,11 @@ public class Haptic : MonoBehaviour
     {
         if (trackpadAction.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
-            Pulse(1, 150, 75, SteamVR_Input_Sources.LeftHand);
+            Pulse(0.1f, 150, 75, SteamVR_Input_Sources.LeftHand);
         }
         if (trackpadAction.GetStateDown(SteamVR_Input_Sources.LeftHand))
         {
-            Pulse(1, 150, 75, SteamVR_Input_Sources.RightHand);
+            Pulse(0.1f, 150, 75, SteamVR_Input_Sources.RightHand);
         }
     }
 

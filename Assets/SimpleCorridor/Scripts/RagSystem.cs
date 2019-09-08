@@ -9,6 +9,7 @@ public class RagSystem : MonoBehaviour
 
     public Animator animator;
     private Rigidbody rigid;
+    private Collider collider;
     public Rigidbody RIGID_BODY
     {
         get
@@ -24,6 +25,19 @@ public class RagSystem : MonoBehaviour
     private void Awake()
     {
         SetRagdollParts();
+    }
+
+    private void setInit()
+    {
+        if (GetComponent<Collider>() !=null)
+        {
+            collider = GetComponent<Collider>();
+        }
+
+        if (GetComponent<Rigidbody>() != null)
+        {
+            rigid = GetComponent<Rigidbody>();
+        }
     }
     
     private void OnTriggerEnter(Collider collider)
@@ -79,6 +93,7 @@ public class RagSystem : MonoBehaviour
     {
         Debug.Log("Ragdoll turned on");
         RIGID_BODY.useGravity = false;
+        RIGID_BODY.isKinematic = false;
         RIGID_BODY.velocity = Vector3.zero;
 
 

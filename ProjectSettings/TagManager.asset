@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Projectile
   - HeadCollider
+  - projectile
+  - FxTemporaire
+  - Button
   layers:
   - Default
   - TransparentFX

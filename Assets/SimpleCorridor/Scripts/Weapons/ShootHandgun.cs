@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Valve.VR;
-using System;
 
 
 public class ShootHandgun : MonoBehaviour
@@ -14,15 +13,14 @@ public class ShootHandgun : MonoBehaviour
     private SteamVR_Behaviour_Pose m_Pose = null;
     public AudioSource audioSource;
     public AudioClip audioClip;
+    public SteamVR_Action_Vibration hapticVibrationAction;
 
-    // Start is called before the first frame update
     void Start()
     {
         m_Pose = GetComponentInParent<SteamVR_Behaviour_Pose>();
         animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (isReloading)
@@ -30,9 +28,9 @@ public class ShootHandgun : MonoBehaviour
 
         if (fireAction.GetStateDown(m_Pose.inputSource))
         {
+            // shoot when not in pause time
             if (Time.timeScale != 0)
             {
-                animator.SetBool("Fire", true);
                 Fire();
             }
         }
@@ -40,7 +38,22 @@ public class ShootHandgun : MonoBehaviour
 
     private void Fire()
     {
-        // audioSource.pitch = (float) Math.Round(audioSource.pitch * 0.8, 2);
-        audioSource.PlayOneShot(audioClip, 0.5F);            
-     }
+        // play fire sound
+        audioSource.PlayOneShot(audioClip, 0.05F);
+        animator.SetBool("Fire", true);
+        //StartCoroutine(ShakeHaptic());
+    }
+
+    private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
+    {
+        hapticVibrationAction.Execute(0, duration, frequency, amplitude, source);
+        print("Pulse " + source.ToString());
+    }
+
+    IEnumerator ShakeHaptic() {
+        // wait time before shake controller
+        yield return new WaitForSeconds(0.1f);
+        Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.LeftHand);
+    }
+
 }

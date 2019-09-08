@@ -68,7 +68,7 @@ public class Blaster : MonoBehaviour
         targetProjectile.Launch(this);
 
         // play fire sound
-        AudioManager.instance.Play("PistolFire");
+        //AudioManager.instance.Play("PistolFire");
 
         UpdateFiredCount(m_FiredCount + 1);
     }
