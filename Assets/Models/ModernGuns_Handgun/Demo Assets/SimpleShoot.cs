@@ -47,8 +47,8 @@ public class SimpleShoot : MonoBehaviour
     {
          GameObject casing;
         casing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation) as GameObject;
-        casing.GetComponent<Rigidbody>().AddExplosionForce(550f, (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
-        casing.GetComponent<Rigidbody>().AddTorque(new Vector3(0, Random.Range(100f, 500f), Random.Range(10f, 1000f)), ForceMode.Impulse);
+        casing.GetComponent<Rigidbody>().AddExplosionForce(15f, (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
+        casing.GetComponent<Rigidbody>().AddTorque(new Vector3(0, Random.Range(10f, 50f), Random.Range(1f, 100f)), ForceMode.Impulse);
     }
 
 
