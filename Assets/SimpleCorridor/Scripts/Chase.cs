@@ -37,6 +37,7 @@ public class Chase : MonoBehaviour
             else
             {
                 anim.SetBool("isAttacking", true);
+                anim.SetBool("isIdle", true);
                 anim.SetBool("isWalking", false);
             }
         }

@@ -6,11 +6,11 @@ using System;
 
 public class SpeedController : MonoBehaviour
 {
-    float _fixedDeltaTime;
-    float _timeScale;
+    float fixedDeltaTime;
+    float timeScale;
 
     public SteamVR_Action_Boolean slowMod = null;
-    private SteamVR_Behaviour_Pose m_Pose = null;
+    private SteamVR_Behaviour_Pose pose = null;
     private int slowFactorTime;
 
     float audioClipPitch;
@@ -19,9 +19,9 @@ public class SpeedController : MonoBehaviour
 
     void Start()
     {
-        _fixedDeltaTime = Time.fixedDeltaTime;
-        _timeScale = Time.timeScale;
-        m_Pose = GetComponentInParent<SteamVR_Behaviour_Pose>();
+        fixedDeltaTime = Time.fixedDeltaTime;
+        timeScale = Time.timeScale;
+        pose = GetComponentInParent<SteamVR_Behaviour_Pose>();
 
         audioClipPitch = GetComponent<ShootHandgun>().audioSource.pitch;
         saveAudioClipPitch = audioClipPitch;
@@ -30,13 +30,14 @@ public class SpeedController : MonoBehaviour
     void Update()
     {    
         // slowmo Test system
-        if (slowMod.GetStateDown(m_Pose.inputSource))
+        if (slowMod.GetStateDown(pose.inputSource))
         {
-            if (slowFactorTime == 8)
+            if (slowFactorTime == 16)
             {
                 GetComponent<ShootHandgun>().audioSource.pitch = saveAudioClipPitch;
                 slowFactorTime = 0;
-            } else if (slowFactorTime == 0) {
+            } else if (slowFactorTime == 0)
+            {
                 slowFactorTime = 1;
             } else
             {
@@ -44,13 +45,14 @@ public class SpeedController : MonoBehaviour
                 GetComponent<ShootHandgun>().audioSource.pitch = (float) Math.Round(GetComponent<ShootHandgun>().audioSource.pitch * 0.7, 2);
             }
 
-            // Time.fixedDeltaTime = _fixedDeltaTime / slowFactorTime;
             if (slowFactorTime == 0)
             {
                 Time.timeScale = 0;
+                Time.fixedDeltaTime = Time.timeScale * .02f;
             } else
             {
-                Time.timeScale = _timeScale / slowFactorTime;
+                Time.timeScale = timeScale / slowFactorTime;
+                Time.fixedDeltaTime = Time.timeScale * .02f;
             }
         }
     }

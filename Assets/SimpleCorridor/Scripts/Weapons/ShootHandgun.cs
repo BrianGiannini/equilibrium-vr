@@ -31,8 +31,14 @@ public class ShootHandgun : MonoBehaviour
             // shoot when not in pause time
             if (Time.timeScale != 0)
             {
+                animator.SetBool("Fire", true);
                 Fire();
             }
+        }
+
+        if (fireAction.GetStateUp(m_Pose.inputSource))
+        {
+            animator.SetBool("Fire", false);
         }
     }
 
@@ -40,8 +46,9 @@ public class ShootHandgun : MonoBehaviour
     {
         // play fire sound
         audioSource.PlayOneShot(audioClip, 0.05F);
-        animator.SetBool("Fire", true);
-        //StartCoroutine(ShakeHaptic());
+        // StartCoroutine(ShakeHaptic());
+        //Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.LeftHand);
+
     }
 
     private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
@@ -50,10 +57,11 @@ public class ShootHandgun : MonoBehaviour
         print("Pulse " + source.ToString());
     }
 
-    IEnumerator ShakeHaptic() {
+    IEnumerator ShakeHaptic()
+    {
         // wait time before shake controller
         yield return new WaitForSeconds(0.1f);
-        Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.LeftHand);
+        Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.RightHand);
     }
 
 }

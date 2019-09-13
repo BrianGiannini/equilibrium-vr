@@ -13,6 +13,8 @@ public class SimpleShoot : MonoBehaviour
 
 
     public float shotPower = 100f;
+    private readonly float explosionPower = 15f;
+    private readonly float explosionRadius = 1f;
 
     void Start()
     {
@@ -22,10 +24,7 @@ public class SimpleShoot : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire1"))
-        {
-            GetComponent<Animator>().SetTrigger("Fire");
-        }
+     
     }
 
     void Shoot()
@@ -35,7 +34,8 @@ public class SimpleShoot : MonoBehaviour
         // bullet.GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
 
         GameObject tempFlash;
-       Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>().AddForce(barrelLocation.forward * shotPower);
+       Instantiate(bulletPrefab, barrelLocation.position, barrelLocation.rotation).GetComponent<Rigidbody>()
+            .AddForce(barrelLocation.forward * shotPower, ForceMode.VelocityChange); //VeocityChange ignore mass, Impulse using mass
        tempFlash = Instantiate(muzzleFlashPrefab, barrelLocation.position, barrelLocation.rotation);
 
        // Destroy(tempFlash, 0.5f);
@@ -45,10 +45,14 @@ public class SimpleShoot : MonoBehaviour
 
     void CasingRelease()
     {
-         GameObject casing;
+        GameObject casing;
         casing = Instantiate(casingPrefab, casingExitLocation.position, casingExitLocation.rotation) as GameObject;
-        casing.GetComponent<Rigidbody>().AddExplosionForce(15f, (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f), 1f);
-        casing.GetComponent<Rigidbody>().AddTorque(new Vector3(0, Random.Range(10f, 50f), Random.Range(1f, 100f)), ForceMode.Impulse);
+        // AddExplosionForce : Power, transform.position, radius
+        casing.GetComponent<Rigidbody>()
+            .AddExplosionForce(explosionPower, (casingExitLocation.position - casingExitLocation.right * 0.3f - casingExitLocation.up * 0.6f),
+            explosionRadius, 0, ForceMode.VelocityChange); 
+        casing.GetComponent<Rigidbody>()
+            .AddTorque(new Vector3(0, Random.Range(10f, 50f), Random.Range(1f, 100f)), ForceMode.VelocityChange);
     }
 
 
