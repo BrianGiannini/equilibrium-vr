@@ -29,39 +29,47 @@ public class ShootHandgun : MonoBehaviour
         if (fireAction.GetStateDown(m_Pose.inputSource))
         {
             // shoot when not in pause time
-            if (Time.timeScale != 0)
+            //print("Fire triggered " + animator.GetBool("Fire"));
+
+            print("Down");
+
+            if (Time.timeScale != 0 && animator.GetBool("Fire") == false)
             {
-                animator.SetBool("Fire", true);
                 Fire();
             }
         }
 
         if (fireAction.GetStateUp(m_Pose.inputSource))
         {
-            animator.SetBool("Fire", false);
+            print("Up");
+            // animator.SetBool("Fire", false);
+
         }
     }
 
     private void Fire()
     {
+        print("FIRE !");
+        animator.SetBool("Fire", true);
         // play fire sound
-        audioSource.PlayOneShot(audioClip, 0.05F);
-        // StartCoroutine(ShakeHaptic());
-        //Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.LeftHand);
+        StartCoroutine(PlaySound());        
+    }
 
+    IEnumerator PlaySound()
+    {
+        yield return new WaitForSeconds(0.05f);
+        audioSource.PlayOneShot(audioClip, 0.1F);
+        //Pulse(1, 150, 75, SteamVR_Input_Sources.RightHand);
+    }
+
+    private void SetReady() {
+        animator.SetBool("Fire", false);
     }
 
     private void Pulse(float duration, float frequency, float amplitude, SteamVR_Input_Sources source)
     {
         hapticVibrationAction.Execute(0, duration, frequency, amplitude, source);
         print("Pulse " + source.ToString());
-    }
-
-    IEnumerator ShakeHaptic()
-    {
-        // wait time before shake controller
-        yield return new WaitForSeconds(0.1f);
-        Pulse(0.2f, 150, 0.1f, SteamVR_Input_Sources.RightHand);
     }
 
 }

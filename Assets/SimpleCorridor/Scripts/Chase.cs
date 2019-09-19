@@ -32,11 +32,11 @@ public class Chase : MonoBehaviour
             {
                 this.transform.Translate(0, 0, 0.02f);
                 anim.SetBool("isWalking", true);
-                anim.SetBool("isAttacking", false);
+                //anim.SetBool("isAttacking", false);
             }
             else
             {
-                anim.SetBool("isAttacking", true);
+                //anim.SetBool("isAttacking", true);
                 anim.SetBool("isIdle", true);
                 anim.SetBool("isWalking", false);
             }
@@ -45,7 +45,7 @@ public class Chase : MonoBehaviour
         {
             anim.SetBool("isIdle", true);
             anim.SetBool("isWalking", false);
-            anim.SetBool("isAttacking", false);
+            //anim.SetBool("isAttacking", false);
         }
 
     }

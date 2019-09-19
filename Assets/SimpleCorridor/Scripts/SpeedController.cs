@@ -32,7 +32,7 @@ public class SpeedController : MonoBehaviour
         // slowmo Test system
         if (slowMod.GetStateDown(pose.inputSource))
         {
-            if (slowFactorTime == 16)
+            if (slowFactorTime == 32)
             {
                 GetComponent<ShootHandgun>().audioSource.pitch = saveAudioClipPitch;
                 slowFactorTime = 0;
