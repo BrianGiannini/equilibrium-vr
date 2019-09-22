@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Maps/Showcase.unity
+    path: Assets/Maps/Level1.unity
     guid: c3892777f900e6442b624cafb07be2a4
   m_configObjects: {}

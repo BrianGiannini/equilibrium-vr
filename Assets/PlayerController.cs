@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    void MoveAgent()
+    public void MoveAgent()
     {
         agent.SetDestination(player.position);
     }
